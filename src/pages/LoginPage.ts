@@ -1,0 +1,48 @@
+import { test,Locator, Page } from "@playwright/test";
+
+export class LoginPage {
+  readonly page: Page;
+  private usernameInput: Locator;
+  private passwordInput: Locator;
+  private loginButton: Locator;
+  private loginErrorMessage: Locator;
+  private admin: Locator;
+  private logOut: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.usernameInput = page.locator('input[name="Username"]');
+    this.passwordInput = page.locator('input[name="password"]');
+    this.loginButton = page.locator('button:has-text("Sign in")');
+    this.loginErrorMessage = page.locator('//div[contains(text(),"Invalid credentials ")]');
+    this.admin = page.locator('//span[text()=" admin "]');
+    this.logOut = page.getByText(' Log Out ');
+  }
+
+  /**
+   * @Test0 This method logs in the user with valid credentials.
+   *
+   * @description This method performs the login operation using the provided valid credentials. It highlights the input
+   *              fields for better visibility during interaction and fills the username and password fields. After submitting
+   *              the login form by clicking the login button, it validates the success of the login process. The login is
+   *              considered successful if there are no errors.
+   *
+  * @param {Record<string, string>} loginData - An object containing the login credentials. It includes:
+   *                                             - `ValidUserName`: The username used for login.
+   *                                             - `ValidPassword`: The password used for login.
+   */
+
+  async performLogin(loginData: Record<string, string>) {
+
+    await this.page.goto('https://healthapp.yaksha.com/')
+
+    await this.usernameInput.fill(loginData['ValidUserName']);
+
+    await this.passwordInput.fill(loginData['ValidPassword']);
+
+    await this.loginButton.click();
+
+  }
+  
+
+}
