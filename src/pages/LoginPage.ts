@@ -41,6 +41,7 @@ export class LoginPage {
     await this.passwordInput.fill(loginData['ValidPassword']);
 
     await this.loginButton.click();
+    await this.page.waitForTimeout(15000)
 
   }
   
