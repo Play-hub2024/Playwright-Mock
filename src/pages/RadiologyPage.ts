@@ -10,12 +10,12 @@ export default class RadiologyPage {
   private closeModalButton: Locator;
   constructor(page: Page) {
     this.page = page;
-    this.radiologyModule = page.locator('');
-    this.listRequestSubModule = page.locator('');
-    this.fromDate = page.locator(``);
-    this.okButton = page.locator(``);
-    this.addReportButton = page.locator('');
-    this.closeModalButton = page.locator(``);
+    this.radiologyModule = page.locator('//a[@href="#/Radiology"]');
+    this.listRequestSubModule = page.locator('//a[@href="#/Radiology/ImagingRequisitionList"]').nth(0);
+    this.fromDate = page.locator(`//input[@id="date"]`).nth(0);
+    this.okButton = page.locator(`//button[@class="btn green btn-success"]`);
+    this.addReportButton = page.locator('//a[@danphe-grid-action="show-add-report"]').nth(0);
+    this.closeModalButton = page.locator(`//a[@title="Cancel"]`);
   }
   /**
    * @Test6.1 This method performs a radiology request and handles alerts that may arise during the process.
@@ -25,6 +25,18 @@ export default class RadiologyPage {
    *              It loops through the process twice to ensure the requests are handled.
    */
   async performRadiologyRequestAndHandleAlert() {
+await this.radiologyModule.click();
+await this.page.waitForTimeout(3000);
+await this.radiologyModule.click(); 
+await this.page.waitForTimeout(3000);
+await this.fromDate.fill("2020-01-01");
+await this.addReportButton.click();
+await this.closeModalButton.click();
+  this.page.on('dialog', async dialog => {
+    // console.log(`Dialog message: ${dialog.message()}`);
+    await dialog.accept(); // or dialog.dismiss()
+  });
+
     // write your logic here
   }
 
