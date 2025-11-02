@@ -20,7 +20,7 @@ export default class AppointmentPage {
       appointmentLink: page.getByRole('link', { name: 'Appointment ' }),
       counterItem: page.getByRole('link', { name: 'Appointment Booking List' }),
       titleName: page.locator(""),
-      searchBar: page.locator('#searchBar'),
+      searchBar: page.locator('#quickFilterInput'),
       hospitalSearchBar: page.locator("(//input[@type='text'])[1]"),
       patientName: page.locator('.patient-name'),
       patientCode: page.locator(""),
@@ -40,13 +40,17 @@ export default class AppointmentPage {
    * @param {string} patientName - The expected patient name to validate in the search results.
    * @return {Promise<void>} - No return value, but logs any error encountered during the verification process.
    */
-  async verifypatientName(loginData: Record<string, string>) {
+  async verifypatientName(patientName: Record<string, string>) {
     // write your logic here
     await this.appointment.appointmentLink.click();
-    await this.appointment.hospitalSearchBar.click();
+    //  await this.appointment.newVisitTab.click();
+    await this.page.locator('(//span[text()="Click to Activate"])[1]').click();
+    await this.appointment.searchBar.fill('FirstNov5 LastNov5')
 
+    await this.page.keyboard.press('Enter');
+    await this.page.waitForTimeout(5000)
+    // await this.appointment.hospitalSearchBar.click();
 
-    
   }
 
   /**
@@ -59,6 +63,11 @@ export default class AppointmentPage {
    */
   async openNewVisitPageThroughKeyboardButton() {
     // write your logic here
+
+    const element = this.page.locator("//a[text()='X']");
+    if (await element.isVisible()) {
+      await element.click();
+    }
     await this.appointment.appointmentLink.click();
     await this.page.waitForTimeout(1000)
     await this.appointment.newVisitTab.click();
