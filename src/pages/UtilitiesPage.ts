@@ -33,6 +33,10 @@ export default class UtilitiesPage {
     await this.utilities.utilitiesModule.click();
     await this.utilities.ChangeBillingCounter.click();
     await this.page.waitForTimeout(1000)
-
+    const counter = await this.page.locator("//a[text()='X']");
+    if (counter) {
+      await counter.click();
+    }
+await this.utilities.utilitiesModule.click();
   }
 }
