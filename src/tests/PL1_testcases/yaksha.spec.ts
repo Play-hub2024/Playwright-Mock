@@ -64,7 +64,7 @@ test.describe("Yaksha", () => {
     await verifyPatientSearchHappened(page);
   });
 
-  test("TS-3 Activate Counter in Dispensary", async ({ page }) => {
+  test.only("TS-3 Activate Counter in Dispensary", async ({ page }) => {
     await dispensaryPage.verifyActiveCounterMessageInDispensary();
     await verifyDispensaryCounterActivation(page);
   });
