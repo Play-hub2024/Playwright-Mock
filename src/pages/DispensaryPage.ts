@@ -55,8 +55,14 @@ export default class DispensaryPage {
   async verifyActiveCounterMessageInDispensary() {
     // write your logic here
     await this.dispensary.dispensaryLink.click();
+    await this.page.waitForTimeout(3000);
+    await this.dispensary.dispensaryLink.click();
+    await this.page.waitForTimeout(3000);
+    await this.page.locator("//i[text()='Main Dispensary']").click();
     await this.dispensary.counterSelection.click();
     await this.dispensary.activateCounter.click();
+    await this.dispensary.counterSelection.click();
+    //  await this.page.waitForTimeout(30000);
     
 
 
